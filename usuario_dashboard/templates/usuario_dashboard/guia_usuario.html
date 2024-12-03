@@ -1,0 +1,50 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+{% load static %}
+
+{% block title %}Guía de Usuario{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/usuario_dashboard/guia_usuario.css' %}">
+
+<div class="guia-container">
+    <h1 class="guia-title">Guía de Usuario</h1>
+
+    <section class="guides">
+        <div class="guides-grid">
+            <a href="{% url 'guia_modulos' %}" class="guide-card">
+                <div class="guide-icon">
+                    <i data-lucide="box"></i>
+                </div>
+                <h3>Utilización Módulos</h3>
+                <p>¿Cómo usar los Módulos?</p>
+            </a>
+            <a href="{% url 'tipos_residuos' %}" class="guide-card">
+                <div class="guide-icon">
+                    <i data-lucide="trash-2"></i>
+                </div>
+                <h3>Tipos Residuos Aceptados</h3>
+                <p>Conoce qué puedes reciclar</p>
+            </a>
+            <a href="{% url 'faqs' %}" class="guide-card">
+                <div class="guide-icon">
+                    <i data-lucide="help-circle"></i>
+                </div>
+                <h3>Preguntas Frecuentes</h3>
+                <p>Resuelve tus dudas</p>
+            </a>
+            <a href="{% url 'educacion_ambiental' %}" class="guide-card">
+                <div class="guide-icon">
+                    <i data-lucide="book-open"></i>
+                </div>
+                <h3>Educación Ambiental</h3>
+                <p>Aprende sobre el impacto</p>
+            </a>
+        </div>
+    </section>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends 'agente_dashboard/base.html' %}
+
+{% block title %}- Estadísticas{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1 class="page-title">Estadísticas</h1>
+    <div class="stats-grid">
+        <div class="stats-card">
+            <h2>Reciclaje por Tipo de Material</h2>
+            <canvas id="materialChart"></canvas>
+        </div>
+        <div class="stats-card">
+            <h2>Reciclaje por Módulo</h2>
+            <canvas id="moduleChart"></canvas>
+        </div>
+        <div class="stats-card">
+            <h2>Tendencia de Reciclaje</h2>
+            <canvas id="trendChart"></canvas>
+        </div>
+        <div class="stats-card">
+            <h2>Eficiencia de Módulos</h2>
+            <canvas id="efficiencyChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Función para crear el gráfico de materiales (pie chart)
+    function createMaterialChart() {
+        const ctx = document.getElementById('materialChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Plástico', 'Papel', 'Vidrio', 'Metal'],
+                datasets: [{
+                    data: [300, 200, 150, 100],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    }
+
+    // Función para crear el gráfico por módulo (bar chart)
+    function createModuleChart() {
+        const ctx = document.getElementById('moduleChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Módulo 1', 'Módulo 2', 'Módulo 3', 'Módulo 4'],
+                datasets: [{
+                    label: 'Kg Reciclados',
+                    data: [250, 180, 300, 220],
+                    backgroundColor: '#36A2EB'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Kilogramos'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Función para crear el gráfico de tendencia (line chart)
+    function createTrendChart() {
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                datasets: [{
+                    label: 'Total Reciclado',
+                    data: [650, 590, 800, 810, 960, 1000],
+                    borderColor: '#4BC0C0',
+                    tension: 0.1,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Kilogramos'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Función para crear el gráfico de eficiencia (radar chart)
+    function createEfficiencyChart() {
+        const ctx = document.getElementById('efficiencyChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Velocidad', 'Precisión', 'Volumen', 'Mantenimiento', 'Energía'],
+                datasets: [{
+                    label: 'Módulo 1',
+                    data: [85, 90, 75, 80, 85],
+                    borderColor: '#FF6384',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)'
+                }, {
+                    label: 'Módulo 2',
+                    data: [88, 85, 80, 85, 80],
+                    borderColor: '#36A2EB',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Crear todos los gráficos cuando se cargue la página
+    document.addEventListener('DOMContentLoaded', () => {
+        createMaterialChart();
+        createModuleChart();
+        createTrendChart();
+        createEfficiencyChart();
+    });
+</script>
+
+<style>
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .stats-card {
+        background-color: white;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .stats-card h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: #333;
+        text-align: center;
+    }
+
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+{% endblock %}

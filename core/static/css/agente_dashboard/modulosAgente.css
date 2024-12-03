@@ -1,0 +1,323 @@
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+    --text-color: #333;
+    --background-color: #f5f5f5;
+    --card-background: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.modulos-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.modulos-search {
+    margin-bottom: 24px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    background: var(--card-background);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.search-form input {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    font-size: 16px;
+    outline: none;
+    border-radius: 4px;
+}
+
+.search-form button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modulos-map {
+    position: relative;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+.view-map-btn {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: var(--card-background);
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    text-decoration: none;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+}
+
+.modulos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.modulo-card {
+    background: var(--card-background);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.modulo-image {
+    position: relative;
+    height: 200px;
+}
+
+.modulo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    color: #999;
+    font-size: 48px;
+}
+
+.modulo-status {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 12px;
+    border-radius: 16px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status-success { background: #10B981; }
+.status-warning { background: #F59E0B; }
+.status-danger { background: #EF4444; }
+
+.modulo-info {
+    padding: 16px;
+}
+
+.modulo-info h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.modulo-location {
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.modulo-capacity {
+    margin-bottom: 16px;
+}
+
+.capacity-bar {
+    height: 8px;
+    background: #E5E7EB;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.capacity-fill {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.modulo-details {
+    color: #6B7280;
+    font-size: 14px;
+}
+
+.modulo-details p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+    .modulos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modulos-container {
+        padding: 16px;
+    }
+    
+    #map {
+        height: 300px;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modulo-card {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+
+.leaflet-popup-content {
+    margin: 13px 19px;
+    line-height: 1.4;
+}
+
+.map-info-window h3 {
+    margin: 0 0 5px;
+    color: var(--text-color);
+}
+
+.map-info-window p {
+    margin: 0 0 5px;
+    color: #666;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modulo-card,
+    .modulo-card:hover,
+    .capacity-fill {
+        transition: none;
+        animation: none;
+    }
+}
+
+.modulo-status,
+.search-form button,
+.view-map-btn {
+    font-weight: bold;
+}
+
+.modulo-location,
+.modulo-details {
+    color: #4a4a4a;
+}
+
+.search-form button:hover,
+.view-map-btn:hover {
+    opacity: 0.9;
+}
+
+.modulo-card:focus-within {
+    outline: 2px solid var(--primary-color);
+}
+
+/* Full map view styles */
+.full-map #map {
+    height: 100vh;
+}
+
+.map-legend {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.map-legend h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.legend-label {
+    font-size: 14px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+}

@@ -1,0 +1,92 @@
+.guia-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.guia-title {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.quick-actions h2,
+.guides h2 {
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.quick-actions .grid,
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.card,
+.guide-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: #1f2937;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover,
+.guide-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card i,
+.guide-icon i {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #22c55e;
+    margin-bottom: 1rem;
+}
+
+.card h3,
+.guide-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.card p,
+.guide-card p {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.guide-icon {
+    width: 3rem;
+    height: 3rem;
+    background: #f3f4f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .guia-container {
+        padding: 1rem;
+    }
+
+    .quick-actions .grid,
+    .guides-grid {
+        grid-template-columns: 1fr;
+    }
+}

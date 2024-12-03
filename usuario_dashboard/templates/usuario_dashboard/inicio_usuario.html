@@ -1,0 +1,74 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<section class="welcome">
+    <h1>Bienvenido, {{ request.user.username }}</h1>
+    <div class="points-card">
+        <h2>Tus puntos</h2>
+        <p class="points">{{ request.user.puntos }}</p>
+        <p>¡Sigue reciclando para ganar más puntos!</p>
+    </div>
+</section>
+
+<section class="quick-actions">
+    <h2>Acciones rápidas</h2>
+    <div class="grid">
+        <a href="{% url 'reciclar' %}" class="card">
+            <i data-lucide="recycle"></i>
+            <h3>Reciclar</h3>
+            <p>Registra tus reciclajes</p>
+        </a>
+        <a href="{% url 'lista_modulos' %}" class="card">
+            <i data-lucide="map-pin"></i>
+            <h3>Módulos</h3>
+            <p>Encuentra puntos de reciclaje</p>
+        </a>
+        <a href="{% url 'historial_reciclaje' %}" class="card">
+            <i data-lucide="bar-chart-2"></i>
+            <h3>Historial de Reciclaje</h3>
+            <p>Revisa tu progreso</p>
+        </a>
+        <a href="{% url 'cupones' %}" class="card">
+            <i data-lucide="gift"></i>
+            <h3>Canjes</h3>
+            <p>Canjea tus puntos</p>
+        </a>
+    </div>
+</section>
+
+<section class="events">
+    <h2>Próximos Eventos</h2>
+    <div class="events-grid">
+        {% for evento in eventos %}
+        <div class="event-card">
+            <div class="event-icon">
+                <i data-lucide="calendar"></i>
+            </div>
+            <div class="event-content">
+                <h3>{{ evento.titulo }}</h3>
+                <div class="event-details">
+                    <div class="event-date">
+                        <i data-lucide="clock"></i>
+                        <time datetime="{{ evento.fecha|date:'Y-m-d H:i' }}">
+                            {{ evento.fecha|date:"d \d\e F, Y" }} - {{ evento.fecha|date:"H:i" }}
+                        </time>
+                    </div>
+                    <div class="event-location">
+                        <i data-lucide="map-pin"></i>
+                        <span>{{ evento.ubicacion }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="events-empty">
+            <i data-lucide="calendar-x"></i>
+            <p>No hay eventos próximos programados</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

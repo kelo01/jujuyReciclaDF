@@ -1,0 +1,93 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/usuario_dashboard/historial_registro.css' %}">
+<div class="historial-container">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-content">
+                <h3>Total de Reciclajes</h3>
+                <div class="stat-value">{{ total_reciclajes }}</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-content">
+                <h3>Puntos Obtenidos</h3>
+                <div class="stat-value">{{ total_puntos_obtenidos }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="historial-section">
+        <div class="historial-header">
+            <div class="title-with-icon">
+                <i data-lucide="recycle"></i>
+                <h2>Historial de Reciclaje</h2>
+            </div>
+        </div>
+
+        {% if registros_reciclaje %}
+        <div class="table-container">
+            <table class="historial-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="calendar"></i>
+                                Fecha
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="map-pin"></i>
+                                Módulo
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="package"></i>
+                                Material
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="scale"></i>
+                                Cantidad (kg)
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="coins"></i>
+                                Puntos
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registro in registros_reciclaje %}
+                    <tr>
+                        <td>{{ registro.fecha|date:"d/m/Y H:i" }}</td>
+                        <td>{{ registro.modulo.nombre }}</td>
+                        <td>{{ registro.material.nombre }}</td>
+                        <td>{{ registro.cantidad }}</td>
+                        <td>{{ registro.puntos_obtenidos }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i data-lucide="trash-2" class="empty-icon"></i>
+            <p>Aún no has registrado ningún reciclaje</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

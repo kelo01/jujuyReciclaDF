@@ -1,0 +1,53 @@
+{% extends 'agente_dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Gestión de Alertas{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="titulo-principal">Gestión de Alertas</h1>
+
+    <form id="filterForm" class="filter-form">
+        <div class="form-group">
+            <label for="estado">Estado de la Alerta:</label>
+            <select id="estado" name="estado" class="form-select">
+                <option value="">Todos</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="tipo">Tipo de Alerta:</label>
+            <select id="tipo" name="tipo" class="form-select">
+                <option value="">Todos</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+
+    <div id="alertsContainer" class="alerts-container">
+        <!-- Las alertas se renderizarán aquí -->
+    </div>
+</div>
+
+<!-- Template para el modal de detalles -->
+<div id="modalTemplate" class="modal-template" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Detalles de la Alerta</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- El contenido se llenará dinámicamente -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Datos iniciales de Django
+    const alertasIniciales = JSON.parse('{{ alertas_json|safe }}');
+    const estados = JSON.parse('{{ estados_json|safe }}');
+    const tipos = JSON.parse('{{ tipos_json|safe }}');
+</script>
+<script src="{% static 'js/alertas.js' %}"></script>
+{% endblock %}

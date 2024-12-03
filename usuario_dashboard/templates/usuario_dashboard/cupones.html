@@ -1,0 +1,360 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+{% load static %}
+
+{% block content %}
+<div class="cupon-container">
+    <div class="points-header">
+        <h1 class="points-header__title">Cupones Disponibles</h1>
+        <div class="points-header__available">
+            <i data-lucide="wallet" class="points-header__icon"></i>
+            <span class="points-header__amount">{{ request.user.puntos }}</span>
+            <span class="points-header__label">pts disponibles</span>
+        </div>
+    </div>
+
+    {% if messages %}
+    <div class="cupon-messages">
+        {% for message in messages %}
+        <div class="cupon-message {% if message.tags %}cupon-message--{{ message.tags }}{% endif %}">
+            <i data-lucide="{% if message.tags == 'success' %}check-circle{% else %}alert-circle{% endif %}"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if cupones %}
+    <div class="cupon-cards">
+        {% for cupon in cupones %}
+        <div class="cupon-card {% if request.user.puntos < cupon.puntos_requeridos %}insufficient-points{% endif %}">
+            <div class="cupon-card__badges">
+                <div class="points-badge points-badge--required">
+                    <i data-lucide="coins"></i>
+                    <span class="points-badge__amount">{{ cupon.puntos_requeridos }}</span>
+                    <span class="points-badge__label">pts requeridos</span>
+                </div>
+                <div class="points-badge points-badge--reward">
+                    <i data-lucide="gift"></i>
+                    <span class="points-badge__amount">+{{ cupon.puntos_otorgados }}</span>
+                    <span class="points-badge__label">pts a otorgar</span>
+                </div>
+            </div>
+            <div class="cupon-card__content">
+                <h3 class="cupon-card__title">{{ cupon.nombre }}</h3>
+                <p class="cupon-card__description">{{ cupon.descripcion }}</p>
+                <form method="POST" action="{% url 'cupones' %}" class="cupon-card__action">
+                    {% csrf_token %}
+                    <input type="hidden" name="cupon_id" value="{{ cupon.id }}">
+                    <button type="submit" class="cupon-card__button" {% if request.user.puntos < cupon.puntos_requeridos %}disabled{% endif %}>
+                        {% if request.user.puntos < cupon.puntos_requeridos %}
+                            <i data-lucide="lock"></i>
+                            <span>Puntos insuficientes</span>
+                        {% else %}
+                            <span>Canjear</span>
+                            <i data-lucide="arrow-right"></i>
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="cupon-cards__empty">
+        <i data-lucide="package-x"></i>
+        <h2>No hay cupones disponibles</h2>
+        <p>No hay cupones disponibles en este momento. Vuelve más tarde.</p>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+:root {
+    --color-primary: #10B981;
+    --color-primary-dark: #059669;
+    --color-primary-light: #D1FAE5;
+    --color-secondary: #6366F1;
+    --color-secondary-light: #EEF2FF;
+    --color-gray-50: #F9FAFB;
+    --color-gray-100: #F3F4F6;
+    --color-gray-200: #E5E7EB;
+    --color-gray-300: #D1D5DB;
+    --color-gray-400: #9CA3AF;
+    --color-gray-500: #6B7280;
+    --color-gray-600: #4B5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1F2937;
+    --color-gray-900: #111827;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.cupon-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: var(--color-gray-50);
+    min-height: calc(100vh - 64px);
+}
+
+/* Header with available points */
+.points-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.points-header__title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    letter-spacing: -0.025em;
+}
+
+.points-header__available {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border-radius: 9999px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-gray-200);
+}
+
+.points-header__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-primary);
+}
+
+.points-header__amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.points-header__label {
+    color: var(--color-gray-600);
+    font-size: 0.875rem;
+}
+
+/* Cards Grid */
+.cupon-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Card */
+.cupon-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-gray-200);
+}
+
+.cupon-card:not(.insufficient-points):hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Points Badges */
+.cupon-card__badges {
+    padding: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.points-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.points-badge--required {
+    background: var(--color-secondary-light);
+    color: var(--color-secondary);
+    border: 1px solid #E0E7FF;
+}
+
+.points-badge--reward {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    border: 1px solid #A7F3D0;
+}
+
+.points-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.points-badge i {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.points-badge__amount {
+    font-weight: 600;
+}
+
+.points-badge__label {
+    font-size: 0.75rem;
+    opacity: 0.9;
+}
+
+/* Card Content */
+.cupon-card__content {
+    padding: 0 1.25rem 1.25rem;
+}
+
+.cupon-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin-bottom: 0.5rem;
+}
+
+.cupon-card__description {
+    color: var(--color-gray-600);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+/* Button */
+.cupon-card__button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.875rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cupon-card__button:not(:disabled):hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.cupon-card__button:disabled {
+    background: var(--color-gray-400);
+    cursor: not-allowed;
+}
+
+.cupon-card__button i {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.2s ease;
+}
+
+.cupon-card__button:not(:disabled):hover i[data-lucide="arrow-right"] {
+    transform: translateX(4px);
+}
+
+/* Insufficient Points State */
+.insufficient-points {
+    opacity: 0.75;
+}
+
+.insufficient-points::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--color-gray-400);
+}
+
+/* Messages */
+.cupon-messages {
+    margin-bottom: 2rem;
+}
+
+.cupon-message {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cupon-message--success {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    border: 1px solid #A7F3D0;
+}
+
+.cupon-message--error {
+    background: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FECACA;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cupon-container {
+        padding: 1rem;
+    }
+
+    .points-header {
+        margin-bottom: 2rem;
+    }
+
+    .points-header__title {
+        font-size: 1.875rem;
+    }
+
+    .cupon-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .cupon-card__badges {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .points-badge {
+        width: 100%;
+    }
+}
+</style>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'agente_dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Mapa de Módulos de Reciclaje{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/agente_dashboard/mapa_de_modulos.css' %}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<style>
+    #map {
+        height: 100vh;
+        width: 100%;
+    }
+</style>
+
+
+
+<div id="map"></div>
+
+<!-- Datos de los módulos para el mapa -->
+{{ modulos_json|json_script:"modulos-data" }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Coordenadas de la Facultad de Ingeniería - UNJu
+    const facultadLat = -24.1853;
+    const facultadLng = -65.2995;
+
+    const map = L.map('map').setView([facultadLat, facultadLng], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Datos de los módulos
+    const modulos = JSON.parse(document.getElementById('modulos-data').textContent);
+    const bounds = L.latLngBounds([[facultadLat, facultadLng]]);
+
+    modulos.forEach(modulo => {
+        const marker = L.marker([modulo.latitud, modulo.longitud], {
+            title: modulo.nombre,
+            icon: L.icon({
+                iconUrl: modulo.estado === 'disponible' ? '{% static "img/marker-green.png" %}' : '{% static "img/marker-gray.png" %}',
+                iconSize: [30, 30],
+                iconAnchor: [15, 30]
+            })
+        }).addTo(map);
+
+        bounds.extend([modulo.latitud, modulo.longitud]);
+
+        marker.bindPopup(`
+            <div class="map-info-window">
+                <h3>${modulo.nombre}</h3>
+                <p>${modulo.ubicacion}</p>
+                <p>Capacidad: ${modulo.porcentaje_lleno}% lleno</p>
+                <p>Estado: ${modulo.estado}</p>
+            </div>
+        `);
+    });
+
+    // Ajustar el zoom para mostrar todos los marcadores
+    map.fitBounds(bounds.pad(0.1));
+});
+</script>
+{% endblock %}

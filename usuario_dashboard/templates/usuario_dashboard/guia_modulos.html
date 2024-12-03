@@ -1,0 +1,64 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+{% load static %}
+
+{% block title %}Guía de Utilización de Módulos{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/usuario_dashboard/guia_modulos.css' %}">
+
+<div class="guia-container">
+    <div class="guide-header">
+        <a href="{% url 'guia_usuario' %}" class="back-button">
+            <i data-lucide="arrow-left"></i>
+            Volver a Guía
+        </a>
+    </div>
+    <h1 class="guia-title">Guía de Utilización de Módulos</h1>
+
+    <section class="modulos-info">
+        <h2>¿Cómo usar los Módulos de Reciclaje?</h2>
+        <ol class="steps">
+            <li>
+                <div class="step-header">
+                    <i data-lucide="map-pin"></i>
+                    <h3>Localiza un Módulo</h3>
+                </div>
+                <p>Usa la función de mapa en la app para encontrar el módulo más cercano.</p>
+            </li>
+            <li>
+                <div class="step-header">
+                    <i data-lucide="layers"></i>
+                    <h3>Prepara tus Residuos</h3>
+                </div>
+                <p>Asegúrate de que tus residuos estén limpios y separados por tipo.</p>
+            </li>
+            
+            <li>
+                <div class="step-header">
+                    <i data-lucide="box"></i>
+                    <h3>Deposita los Residuos</h3>
+                </div>
+                <p>Coloca cada tipo de residuo en el compartimento correspondiente.</p>
+            </li>
+            <li>
+                <div class="step-header">
+                    <i data-lucide="scan"></i>
+                    <h3>Escanea el Código QR</h3>
+                </div>
+                <p>Usa la app para escanear el código QR del módulo y registrar tu visita.</p>
+            </li>
+            <li>
+                <div class="step-header">
+                    <i data-lucide="award"></i>
+                    <h3>Recibe tus Puntos</h3>
+                </div>
+                <p>¡Listo! Tus puntos serán acreditados automáticamente en tu cuenta.</p>
+            </li>
+        </ol>
+    </section>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

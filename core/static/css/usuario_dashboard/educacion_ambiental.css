@@ -1,0 +1,130 @@
+.guia-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background-color: #f9fafb;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guia-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.guia-title {
+    font-size: 2.5rem;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.edu-content h2 {
+    font-size: 1.8rem;
+    color: #22c55e;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #22c55e;
+    padding-left: 0.5rem;
+}
+
+.edu-content p,
+.edu-content li {
+    color: #4b5563;
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.edu-content ul,
+.edu-content ol {
+    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.edu-content ul li::marker {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+.edu-content ol li {
+    font-weight: 600;
+    color: #22c55e;
+}
+
+.edu-content ol li::marker {
+    font-size: 1.2rem;
+    color: #22c55e;
+}
+
+.edu-content li {
+    margin-bottom: 0.75rem;
+    transition: color 0.3s ease;
+}
+
+.edu-content li:hover {
+    color: #1f2937;
+}
+
+@media (max-width: 768px) {
+    .guia-container {
+        padding: 1.5rem;
+    }
+
+    .guia-title {
+        font-size: 2rem;
+    }
+
+    .edu-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .edu-content p,
+    .edu-content li {
+        font-size: 0.95rem;
+    }
+
+    .edu-content ul,
+    .edu-content ol {
+        padding-left: 1.5rem;
+    }
+}
+
+.guide-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--primary-light);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 500;
+    font-size: 1rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.back-button i {
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+}
+
+.back-button:hover {
+    background-color: var(--primary);
+    color: var(--white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.back-button:hover i {
+    color: var(--white);
+}

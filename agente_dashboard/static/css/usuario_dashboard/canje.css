@@ -1,0 +1,187 @@
+.cupon-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.cupon-title {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.cupon-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.cupon-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.cupon-card:hover {
+    transform: translateY(-5px);
+}
+
+.cupon-card__points-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Estilo para los puntos requeridos */
+.cupon-card__points--required {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+/* Estilo para los puntos otorgados */
+.cupon-card__points--reward {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+.cupon-card__points i {
+    width: 16px;
+    height: 16px;
+}
+
+.cupon-card__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 1rem;
+}
+
+.cupon-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.cupon-card__description {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    flex-grow: 1;
+    margin: 0;
+}
+
+.cupon-card__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    margin-top: auto;
+}
+
+.cupon-card__button:hover {
+    background: #16a34a;
+}
+
+.cupon-card__button-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Empty State */
+.cupon-cards__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cupon-cards__empty-icon {
+    width: 48px;
+    height: 48px;
+    color: #9ca3af;
+    margin-bottom: 1rem;
+}
+
+.cupon-cards__empty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.cupon-cards__empty-text {
+    color: #6b7280;
+}
+
+/* Messages */
+.cupon-messages {
+    margin-bottom: 2rem;
+}
+
+.cupon-message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.cupon-message--success {
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+.cupon-message--error {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .cupon-container {
+        padding: 1rem;
+    }
+    
+    .cupon-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .cupon-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .cupon-card__points-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

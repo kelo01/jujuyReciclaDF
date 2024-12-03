@@ -1,0 +1,73 @@
+
+    
+{% extends 'agente_dashboard/base.html' %}
+
+    {% block title %}- Dashboard{% endblock %}
+    {% load static %}
+    
+    {% block content %}
+    <div class="dashboard-container">
+        <!-- Estado de los Módulos -->
+        <section class="dashboard-section module-status">
+            <h2>Estado de los Módulos</h2>
+            <div class="module-list">
+                {% for modulo in modulos %}
+                <div class="module-item">
+                    <div class="module-info">
+                        <span class="module-name">{{ modulo.nombre }}</span>
+                        <div class="progress-bar">
+                            <div class="progress" ></div>
+                        </div>
+                        <span class="module-percentage">{{ modulo.porcentaje_lleno|floatformat:0 }}% lleno</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    
+        <!-- Métricas Principales -->
+        <div class="metrics-grid">
+            <div class="metric-card danger">
+                <div class="metric-content">
+                    <div class="metric-header">
+                        <h3>Alertas Activas</h3>
+                        <i data-lucide="alert-triangle"></i>
+                    </div>
+                    <div class="metric-value">{{ alertas_activas }}</div>
+                    <p class="metric-description">Requieren atención inmediata</p>
+                </div>
+            </div>
+    
+            <div class="metric-card success">
+                <div class="metric-content">
+                    <div class="metric-header">
+                        <h3>Total Reciclado Actualmente</h3>
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <div class="metric-value">{{ reciclado_hoy }} kg</div>
+                    <p class="metric-description">45 % más que ayer</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Acciones Rápidas -->
+        <div class="quick-actions-grid">
+            <a href="{% url 'lista_modulosA' %}" class="action-card">
+                <i data-lucide="map"></i>
+                <h3>Mapa de Módulos</h3>
+            </a>
+            <a href="{% url 'estadisticas' %}" class="action-card">
+                <i data-lucide="bar-chart-2"></i>
+                <h3>Estadísticas</h3>
+            </a>
+            <a href="{% url 'gestion_alertas' %}" class="action-card">
+                <i data-lucide="bell"></i>
+                <h3>Gestión de Alertas</h3>
+            </a>
+            <a href="{% url 'configuracion_agente' %}" class="action-card">
+                <i data-lucide="settings"></i>
+                <h3>Configuración</h3>
+            </a>
+        </div>
+    </div>
+    {% endblock %}

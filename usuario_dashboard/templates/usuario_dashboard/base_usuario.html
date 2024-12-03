@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jujuy Recicla - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/usuario_dashboard/estilo_usuario.css' %}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" href='{% static "img/jujuylogo_3_blanco.ico" %}'>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="{% url 'inicio_usuario' %}" class="logo">
+                    <i data-lucide="recycle"></i>
+                    <span>Jujuy Recicla</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="{% url 'inicio_usuario' %}" class="nav-item {% if request.resolver_match.url_name == 'inicio_usuario' %}active{% endif %}">
+                    <i data-lucide="home"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="{% url 'reciclar' %}" class="nav-item {% if request.resolver_match.url_name == 'reciclar' %}active{% endif %}">
+                    <i data-lucide="recycle"></i>
+                    <span>Reciclar</span>
+                </a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-item nav-dropdown-trigger">
+                        <i data-lucide="history"></i>
+                        <span>Historiales</span>
+                        <i data-lucide="chevron-down" class="dropdown-arrow"></i>
+                    </a>
+                    <div class="nav-dropdown-menu">
+                        <a href="{% url 'historial_reciclaje' %}" class="nav-item">
+                            <i data-lucide="history"></i>
+                            <span>Historial Reciclaje</span>
+                        </a>
+                        <a href="{% url 'historial_canjes' %}" class="nav-item">
+                            <i data-lucide="history"></i>
+                            <span>Historial Canjes</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="{% url 'cupones' %}" class="nav-item {% if request.resolver_match.url_name == 'cupones' %}active{% endif %}">
+                    <i data-lucide="gift"></i>
+                    <span>Canjes</span>
+                </a>
+                <a href="{% url 'lista_modulos' %}" class="nav-item {% if request.resolver_match.url_name == 'lista_modulos' %}active{% endif %}">
+                    <i data-lucide="map-pin"></i>
+                    <span>Módulos</span>
+                </a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-item nav-dropdown-trigger">
+                        <i data-lucide="book-open"></i>
+                        <span>Guía</span>
+                        <i data-lucide="chevron-down" class="dropdown-arrow"></i>
+                    </a>
+                    <div class="nav-dropdown-menu">
+                        <a href="{% url 'guia_modulos' %}" class="nav-item">
+                            <i data-lucide="box"></i>
+                            <span>Utilización Módulos</span>
+                        </a>
+                        <a href="{% url 'tipos_residuos' %}" class="nav-item">
+                            <i data-lucide="trash-2"></i>
+                            <span>Tipos de Residuos</span>
+                        </a>
+                        <a href="{% url 'faqs' %}" class="nav-item">
+                            <i data-lucide="help-circle"></i>
+                            <span>Preguntas Frecuentes</span>
+                        </a>
+                        <a href="{% url 'educacion_ambiental' %}" class="nav-item">
+                            <i data-lucide="book"></i>
+                            <span>Educación Ambiental</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-menu">
+                    <button class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar">
+                            {{ request.user.username|slice:":2"|upper }}
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">{{ request.user.username }}</span>
+                            <span class="user-role">Usuario</span>
+                        </div>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="{% url 'editar_perfil_user' %}" class="dropdown-item">
+                            <i data-lucide="user"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+                        <a href="{% url 'configuracion_user' %}" class="dropdown-item">
+                            <i data-lucide="settings"></i>
+                            <span>Configuración</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'logout' %}" class="dropdown-item text-danger">
+                            <i data-lucide="log-out"></i>
+                            <span>Cerrar sesión</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Mobile Header -->
+            <header class="mobile-header">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i data-lucide="recycle"></i>
+                    <span>Jujuy Recicla</span>
+                </div>
+            </header>
+
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+            
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3><i data-lucide="map-pin"></i> Encuéntranos</h3>
+                        <p>San Salvador de Jujuy, Argentina</p>
+                        <p>Palacio Municipal</p>
+                        <div class="social-icons">
+                            <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+                            <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h3><i data-lucide="phone"></i> Contáctanos</h3>
+                        <p>Teléfono: (388) 999-9999</p>
+                        <p>Email: contacto@jujuyrecicla.gob.ar</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3><i data-lucide="link"></i> Enlaces útiles</h3>
+                        <nav class="footer-nav">
+                            <a href="{% url 'inicio_usuario' %}">Inicio</a>
+                            <a href="{% url 'reciclar' %}">Reciclar</a>
+                            <a href="{% url 'lista_modulos' %}">Módulos</a>
+                            <a href="{% url 'cupones' %}">Cupones</a>
+                        </nav>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; {% now "Y" %} Jujuy Recicla. Todos los derechos reservados.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.querySelector('.sidebar');
+        
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('active');
+        });
+
+        // User menu dropdown
+        const userMenuTrigger = document.getElementById('userMenuTrigger');
+        const userDropdown = document.getElementById('userDropdown');
+        
+        userMenuTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('show');
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            // Close user dropdown
+            if (!userMenuTrigger.contains(e.target) && !userDropdown.contains(e.target)) {
+                userDropdown.classList.remove('show');
+            }
+            
+            // Close sidebar on mobile when clicking outside
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
+        // Nav dropdowns
+        const navDropdowns = document.querySelectorAll('.nav-dropdown');
+        navDropdowns.forEach(dropdown => {
+            const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+            const menu = dropdown.querySelector('.nav-dropdown-menu');
+            
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                menu.classList.toggle('active');
+                trigger.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

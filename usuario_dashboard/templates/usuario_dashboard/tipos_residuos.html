@@ -1,0 +1,56 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+{% load static %}
+
+{% block title %}Tipos de Residuos Aceptados{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/usuario_dashboard/tipos_residuos.css' %}">
+
+<div class="guia-container">
+    <div class="guide-header">
+        <a href="{% url 'guia_usuario' %}" class="back-button">
+            <i data-lucide="arrow-left"></i>
+            Volver a Guía
+        </a>
+    </div>
+    <h1 class="guia-title">Tipos de Residuos Aceptados</h1>
+    
+    <section class="residuos-grid">
+        <div class="residuo-card">
+            <i data-lucide="milk"></i>
+            <h3>Plásticos</h3>
+            <p>Botellas, envases, bolsas limpias</p>
+        </div>
+        <div class="residuo-card">
+            <i data-lucide="newspaper"></i>
+            <h3>Papel y Cartón</h3>
+            <p>Periódicos, revistas, cajas</p>
+        </div>
+        <div class="residuo-card">
+            <i data-lucide="wine"></i>
+            <h3>Vidrio</h3>
+            <p>Botellas, frascos (sin tapas)</p>
+        </div>
+        <div class="residuo-card">
+            <i data-lucide="battery-charging"></i>
+            <h3>Baterías</h3>
+            <p>Pilas y baterías recargables</p>
+        </div>
+        <div class="residuo-card">
+            <i data-lucide="smartphone"></i>
+            <h3>Electrónicos</h3>
+            <p>Pequeños dispositivos, cables</p>
+        </div>
+        <div class="residuo-card">
+            <i data-lucide="box"></i>
+            <h3>Metal</h3>
+            <p>Latas, papel aluminio limpio</p>
+        </div>
+    </section>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

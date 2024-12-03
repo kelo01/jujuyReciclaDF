@@ -1,0 +1,60 @@
+{% extends 'agente_dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/agente_dashboard/perfil.css' %}">
+
+<div class="container">
+    <h1>Editar Perfil</h1>
+    <form method="post" class="profile-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_username">Nombre de usuario:</label>
+            <div class="input-group">
+                <span class="input-icon"><i class="lucide-user"></i></span>
+                {{ form.username }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_email">Correo electrónico:</label>
+            <div class="input-group">
+                <span class="input-icon"><i class="lucide-mail"></i></span>
+                {{ form.email }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_dni">DNI:</label>
+            <div class="input-group">
+                <span class="input-icon"><i class="lucide-id-card"></i></span>
+                {{ form.dni }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_telefono">Teléfono:</label>
+            <div class="input-group">
+                <span class="input-icon"><i class="lucide-phone"></i></span>
+                {{ form.telefono }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_direccion">Dirección:</label>
+            <div class="input-group">
+                <span class="input-icon"><i class="lucide-map-pin"></i></span>
+                {{ form.direccion }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_edad">Edad:</label>
+            <div class="input-group">
+                <span class="input-icon"><i class="lucide-cake"></i></span>
+                {{ form.edad }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    </form>
+</div>
+{% endblock %}

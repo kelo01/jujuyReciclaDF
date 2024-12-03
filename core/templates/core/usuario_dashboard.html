@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jujuy Recicla - Dashboard de Usuario</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #2ECC71;
+            --primary-dark: #27AE60;
+            --primary-light: #E8F5E9;
+            --danger: #E74C3C;
+            --text: #2C3E50;
+            --text-light: #95A5A6;
+            --background: #F9FAFB;
+            --white: #FFFFFF;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .logo i {
+            width: 32px;
+            height: 32px;
+        }
+
+        .user-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--text);
+        }
+
+        .points-card {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .points-number {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            margin: 2rem 0 1rem;
+            font-size: 1.75rem;
+        }
+
+        .event-card {
+            background: var(--primary-light);
+            color: var(--text);
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .event-card i {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .event-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .points-number {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .logo i {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">
+            <i data-lucide="hexagon"></i>
+            Jujuy Recicla
+        </a>
+        <i data-lucide="user" class="user-icon"></i>
+    </header>
+
+    <div class="container">
+        <div class="points-card">
+            <div class="points-number">100</div>
+            <p>¡Sigue reciclando para ganar más puntos!</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <i data-lucide="recycle"></i>
+                <h3>Reciclar</h3>
+                <p>Registra tus reciclajes</p>
+            </div>
+            <div class="card">
+                <i data-lucide="map-pin"></i>
+                <h3>Módulos</h3>
+                <p>Encuentra puntos de reciclaje</p>
+            </div>
+            <div class="card">
+                <i data-lucide="bar-chart-2"></i>
+                <h3>Historial</h3>
+                <p>Revisa tu progreso</p>
+            </div>
+            <div class="card">
+                <i data-lucide="book-open"></i>
+                <h3>Guía</h3>
+                <p>Aprende a reciclar correctamente</p>
+            </div>
+        </div>
+
+        <h2>Próximos Eventos</h2>
+        <div class="grid">
+            <div class="event-card">
+                <i data-lucide="calendar"></i>
+                <h3>Jornada de Reciclaje</h3>
+                <p>15 de Junio</p>
+                <p>Plaza Principal</p>
+            </div>
+            <div class="event-card">
+                <i data-lucide="sprout"></i>
+                <h3>Taller de Compostaje</h3>
+                <p>22 de Junio</p>
+                <p>Parque Botánico</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

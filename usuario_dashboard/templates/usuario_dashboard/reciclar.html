@@ -1,0 +1,82 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+
+{% block title %}Reciclar{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/usuario_dashboard/reciclar.css' %}">
+<div class="reciclar-container">
+    <div class="scanner-section">
+        <h1>Escanear QR del Módulo</h1>
+        <div class="scanner-container">
+            <div class="scanner-frame">
+                <div class="scanner-line"></div>
+                <div class="scanner-overlay">
+                    <div class="scanner-corners"></div>
+                </div>
+                <img src="{% static 'img/qr_Guirso.svg' %}" alt="" class="qr-placeholder">
+            </div>
+            <button id="startScan" class="btn btn-primary">
+                <span class="btn-content">
+                    <i data-lucide="camera"></i>
+                    <span>Iniciar Escáner</span>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de éxito -->
+<div class="modal" id="successModal">
+    <div class="modal-content">
+        <div class="success-icon">
+            <i data-lucide="check-circle"></i>
+        </div>
+        <h2>¡Reciclaje Registrado!</h2>
+        <div class="recycling-details">
+            <p>2.5 kg de Plástico</p>
+            <div class="points-info">
+                <span>Puntos ganados</span>
+                <span class="points">+50</span>
+            </div>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">
+                <span class="btn-content">
+                    <i data-lucide="check"></i>
+                    <span>Cerrar</span>
+                </span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const startScanBtn = document.getElementById('startScan');
+    const successModal = document.getElementById('successModal');
+    const scannerFrame = document.querySelector('.scanner-frame');
+    
+    startScanBtn.addEventListener('click', function() {
+        // Simulamos el proceso de escaneo
+        startScanBtn.disabled = true;
+        startScanBtn.innerHTML = '<span class="btn-content"><i data-lucide="loader"></i><span>Escaneando...</span></span>';
+        scannerFrame.classList.add('scanning');
+        lucide.createIcons();
+        
+        // Simulamos un tiempo de escaneo
+        setTimeout(() => {
+            scannerFrame.classList.remove('scanning');
+            successModal.classList.add('show');
+            startScanBtn.disabled = false;
+            startScanBtn.innerHTML = '<span class="btn-content"><i data-lucide="camera"></i><span>Iniciar Escáner</span></span>';
+            lucide.createIcons();
+        }, 2000);
+    });
+});
+</script>
+
+
+{% endblock %}

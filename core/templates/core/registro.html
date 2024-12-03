@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jujuy Recicla - Registro</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet"href='{% static "css/registro.css" %}'type="text/css"/>
+    <link rel="icon" href="{% static 'img/jujuylogo_3_blanco.ico' %}" sizes="64x64">
+</head>
+<body>
+    <div class="register-container">
+        <h2 class="title">Registro</h2>
+        <p class="subtitle">Regístrate para contribuir al reciclaje en San Salvador de Jujuy</p>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if forloop.first %}
+                <li class="{{ message.tags }}">
+                    {% if message.tags == 'success' %}
+                        <i data-lucide="check-circle"></i>
+                    {% elif message.tags == 'error' %}
+                        <i data-lucide="alert-circle"></i>
+                    {% endif %}
+                    {{ message }}
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="user-type-selector">
+            <button type="button" class="user-type-btn active" data-user-type="usuario">
+                <i data-lucide="user"></i>
+                Usuario
+            </button>
+            <button type="button" class="user-type-btn" data-user-type="agente">
+                <i data-lucide="users"></i>
+                Agente
+            </button>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="rol" id="rol" value="usuario">
+            
+            {% for field in form %}
+                {% if field.name != 'rol' %}
+                    <div class="form-group {% if field.errors %}error{% endif %}">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.name == 'username' %}
+                            <div class="validation-message">
+                                <i data-lucide="info"></i>
+                                Requerido. 150 caracteres como máximo. Únicamente letras, dígitos y @/./+/-/_.
+                            </div>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="error-message">
+                                <i data-lucide="alert-circle"></i>
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if field.name == 'password1' %}
+                            <div class="password-requirements">
+                                <ul>
+                                    <li>Tu contraseña no puede ser similar a tu información personal</li>
+                                    <li>Tu contraseña debe contener al menos 8 caracteres</li>
+                                    <li>Tu contraseña no puede ser una contraseña común</li>
+                                    <li>Tu contraseña no puede ser completamente numérica</li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">Registrarse</button>
+
+            <p class="login-link">
+                ¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const userTypeBtns = document.querySelectorAll('.user-type-btn');
+        const rolInput = document.getElementById('rol');
+        const zonaAsignadaField = document.getElementById('id_zona_asignada')?.closest('.form-group');
+
+        userTypeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                userTypeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                rolInput.value = btn.dataset.userType;
+                if (zonaAsignadaField) {
+                    toggleZonaAsignada();
+                }
+            });
+        });
+
+        function toggleZonaAsignada() {
+            if (rolInput.value === 'agente') {
+                zonaAsignadaField.style.display = 'block';
+            } else {
+                zonaAsignadaField.style.display = 'none';
+            }
+        }
+
+        if (zonaAsignadaField) {
+            toggleZonaAsignada();
+        }
+
+        // Remover mensajes después de 5 segundos
+        setTimeout(() => {
+            const messages = document.querySelector('.messages');
+            if (messages) {
+                messages.style.display = 'none';
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

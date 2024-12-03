@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jujuy Recicla - Iniciar Sesión</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet"href='{% static "css/login.css" %}'type="text/css"/>
+    <link rel="icon" href="{% static 'img/jujuylogo_3_blanco.ico' %}" >
+
+</head>
+<body>
+    <div class="login-container">
+        <!--Modificar LOGO -->
+
+        <h2 class="title">Iniciar Sesión</h2>
+        <p class="subtitle">Inicia sesión para contribuir al reciclaje en San Salvador de Jujuy</p>
+
+        <div class="user-type-selector">
+            <button type="button" class="user-type-btn active" data-user-type="usuario">
+                <i data-lucide="user"></i>
+                Usuario
+            </button>
+            <button type="button" class="user-type-btn" data-user-type="agente">
+                <i data-lucide="users"></i>
+                Agente
+            </button>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="user_type" id="user_type" value="usuario">
+            
+            {% if form.non_field_errors %}
+                <div class="error-message">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group {% if field.errors %}error{% endif %}">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error-message">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">Iniciar Sesión</button>
+
+            <p class="register-link">
+                ¿No tienes una cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const userTypeBtns = document.querySelectorAll('.user-type-btn');
+        const userTypeInput = document.getElementById('user_type');
+
+        userTypeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                userTypeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                userTypeInput.value = btn.dataset.userType;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+{% load static %}
+
+{% block title %}Voucher{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/usuario_dashboard/voucher.css' %}">
+
+<div class="voucher-page">
+    <div class="info">
+        <p>Haz escanear el código de barras o el QR del voucher generado en el local adherido.</p>
+    </div>
+
+    <div class="voucher-container">
+        <div class="voucher-header">
+            <a href="{% url 'historial_canjes' %}" class="back-button">
+                <i data-lucide="arrow-left"></i>
+                Volver al Historial
+            </a>
+        </div>
+        
+        <div class="voucher-content">
+            <h1>¡VOUCHER GENERADO CON ÉXITO!</h1>
+            
+            <div class="voucher-card">
+                <div class="qr-code">
+                    <img src="{% static 'img/qr_Guirso.svg' %}" alt="QR Code">
+                </div>  
+                
+                <div class="barcode">
+                    <img src="{% static 'img/barcode.svg' %}" alt="Código de barras">
+                </div>
+
+                {% if canje.codigo %}
+                <div class="code">{{ canje.codigo }}</div>
+                {% endif %}
+                
+                <button class="print-button" onclick="window.print()">
+                    <i data-lucide="printer"></i>
+                    Imprimir Voucher
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

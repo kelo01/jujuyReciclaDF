@@ -1,0 +1,107 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/usuario_dashboard/historial_canje.css' %}">
+<div class="historial-container">
+    <!-- Cards de estadísticas -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-content">
+                <h3>Total de Canjes</h3>
+                <div class="stat-value">{{ total_canjes }}</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-content">
+                <h3>Puntos Gastados</h3>
+                <div class="stat-value">{{ total_puntos_gastados }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sección de historial de canjes -->
+    <div class="historial-section">
+        <div class="historial-header">
+            <div class="title-with-icon">
+                <i data-lucide="gift"></i>
+                <h2>Historial de Canjes</h2>
+            </div>
+        </div>      
+
+        {% if canjes %}
+        <div class="table-container">
+            <table class="historial-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="calendar"></i>
+                                Fecha
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="tag"></i>
+                                Cupón
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="file-text"></i>
+                                Descripción
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="coins"></i>
+                                Puntos Gastados
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="award"></i>
+                                Puntos Otorgados
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th-content">
+                                <i data-lucide="ticket"></i>
+                                Voucher
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for canje in canjes %}
+                    <tr>
+                        <td>{{ canje.fecha|date:"d/m/Y H:i" }}</td>
+                        <td>{{ canje.cupon.nombre }}</td>
+                        <td>{{ canje.cupon.descripcion }}</td>
+                        <td>{{ canje.puntos_gastados }}</td>
+                        <td>{{ canje.cupon.puntos_otorgados }}</td>
+                        <td>
+                            <a href="{% url 'ver_voucher' canje.id %}" class="voucher-button">
+                                <i data-lucide="ticket"></i>
+                                Ver Voucher
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i data-lucide="package-x" class="empty-icon"></i>
+            <p>Aún no has realizado ningún canje</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

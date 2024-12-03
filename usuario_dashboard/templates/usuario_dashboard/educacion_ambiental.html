@@ -1,0 +1,44 @@
+{% extends 'usuario_dashboard/base_usuario.html' %}
+{% load static %}
+
+{% block title %}Educación Ambiental{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/usuario_dashboard/educacion_ambiental.css' %}">
+
+<div class="guia-container">
+    <div class="guide-header">
+        <a href="{% url 'guia_usuario' %}" class="back-button">
+            <i data-lucide="arrow-left" aria-hidden="true"></i>
+            <span>Volver a Guía</span>
+        </a>
+    </div>
+
+    <h1 class="guia-title">Educación Ambiental</h1>
+    
+    <section class="edu-content">
+        <h2>Impacto del Reciclaje</h2>
+        <p>
+            El reciclaje juega un papel crucial en la protección del medio ambiente. Al reciclar, reducimos la cantidad 
+            de residuos que terminan en vertederos, conservamos recursos naturales y disminuimos las emisiones de 
+            gases de efecto invernadero.
+        </p>
+        
+        <h2>Datos Importantes</h2>
+        <ul>
+            <li>Reciclar una lata de aluminio ahorra energía suficiente para hacer funcionar un televisor durante 3 horas.</li>
+            <li>Una tonelada de papel reciclado salva 17 árboles.</li>
+            <li>El plástico puede tardar hasta 1000 años en descomponerse en un vertedero.</li>
+        </ul>
+        
+        <h2>Consejos para Reducir, Reutilizar y Reciclar</h2>
+        <ol>
+            <li>Usa bolsas reutilizables para las compras.</li>
+            <li>Opta por productos con menos embalaje.</li>
+            <li>Composta los residuos orgánicos.</li>
+            <li>Dona artículos que ya no uses en lugar de tirarlos.</li>
+            <li>Educa a otros sobre la importancia del reciclaje.</li>
+        </ol>
+    </section>
+</div>
+{% endblock %}

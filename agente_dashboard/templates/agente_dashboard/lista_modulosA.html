@@ -1,0 +1,120 @@
+{% extends 'agente_dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Módulos de Reciclaje{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="{% static 'css/agente_dashboard/mapa_de_modulos.css' %}">
+
+<div class="modulos-container">
+    <h1 class="page-title">Módulos de Reciclaje</h1>
+
+    <!-- Barra de búsqueda -->
+    <div class="modulos-search">
+        <form method="get" action="{% url 'lista_modulosA' %}" class="search-form">
+            <input type="text" name="q" placeholder="Buscar módulos..." value="{{ query }}" aria-label="Buscar módulos">
+            <button type="submit" aria-label="Buscar">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Mapa -->
+    <div class="modulos-map">
+        <div id="map" aria-label="Mapa de módulos de reciclaje"></div>
+        <a href="{% url 'mapa_modulosA' %}" class="view-map-btn">
+            <i class="fas fa-expand" aria-hidden="true"></i>
+            Ver mapa completo
+        </a>
+    </div>
+
+    <!-- Módulos Disponibles -->
+    <section class="modulos-section">
+        <h2>Módulos Disponibles</h2>
+        <div class="modulos-grid">
+            {% for modulo in modulos_disponibles %}
+                <article class="modulo-card">
+                    <div class="modulo-image">
+                        {% if modulo.imagen %}
+                            <img src="{{ modulo.imagen.url }}" alt="{{ modulo.nombre }}" loading="lazy">
+                        {% else %}
+                            <div class="no-image">
+                                <i class="fas fa-recycle" aria-hidden="true"></i>
+                            </div>
+                        {% endif %}
+                        <div class="modulo-status status-{{ modulo.get_estado_display_class }}">
+                            {{ modulo.get_estado_display }}
+                        </div>
+                    </div>
+                    <div class="modulo-info">
+                        <h3>{{ modulo.nombre }}</h3>
+                        <p class="modulo-location">
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            {{ modulo.ubicacion }}
+                        </p>
+                        <div class="modulo-capacity">
+                            <div class="capacity-bar">
+                                <div class="capacity-fill" ></div>
+                            </div>
+                            <span>{{ modulo.porcentaje_lleno|floatformat:0 }}% lleno</span>
+                        </div>
+                        <div class="modulo-details">
+                            <p><i class="fas fa-clock" aria-hidden="true"></i> {{ modulo.horario }}</p>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <p class="no-results">No hay módulos disponibles en este momento.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+<!-- Datos de los módulos para el mapa -->
+{{ modulos_json|json_script:"modulos-data" }}
+
+<!-- Script del mapa -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Coordenadas de la Facultad de Ingeniería - UNJu
+        const facultadLat = -24.189133;
+        const facultadLng = -65.293323;
+        const map = L.map('map').setView([facultadLat, facultadLng], 20);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        // Datos de los módulos
+        const modulos = JSON.parse(document.getElementById('modulos-data').textContent);
+        const bounds = L.latLngBounds([[facultadLat, facultadLng]]);
+    
+        modulos.forEach(modulo => {
+            const marker = L.marker([modulo.latitud, modulo.longitud], {
+                title: modulo.nombre,
+                icon: L.icon({
+                    iconUrl: modulo.estado === 'disponible' ? '{% static "img/marker-green.png" %}' : '{% static "img/marker-gray.png" %}',
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 30]
+                })
+            }).addTo(map);
+    
+            bounds.extend([modulo.latitud, modulo.longitud]);
+    
+            marker.bindPopup(`
+                <div class="map-info-window">
+                    <h3>${modulo.nombre}</h3>
+                    <p>${modulo.ubicacion}</p>
+                    <p>Capacidad: ${modulo.porcentaje_lleno}% lleno</p>
+                    <p>Estado: ${modulo.estado}</p>
+                </div>
+            `);
+        });
+    
+        // Ajustar el zoom para mostrar todos los marcadores
+        map.fitBounds(bounds.pad(0.1));
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,282 @@
+.voucher-page {
+    min-height: calc(100vh - 64px);
+    padding: 2.5rem;
+    background-color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.info {
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+    width: 100%;
+}
+
+.info p {
+    color: #64748b;
+    text-align: center;
+    font-size: 0.925rem;
+    line-height: 1.5;
+}
+
+.voucher-container {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 
+                0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    isolation: isolate;
+}
+
+.voucher-header {
+    margin-bottom: 2rem;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.back-button:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    transform: translateX(-2px);
+}
+
+.back-button i {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.2s ease;
+}
+
+.back-button:hover i {
+    transform: translateX(-2px);
+}
+
+.voucher-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.voucher-content h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.voucher-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+}
+
+.voucher-card::before {
+    content: '';
+    position: absolute;
+    inset: 1rem;
+    border: 2px dashed #e2e8f0;
+    border-radius: 0.75rem;
+    pointer-events: none;
+}
+
+.qr-code, .barcode {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.qr-code:hover, .barcode:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.qr-code img {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+
+.barcode img {
+    width: 240px;
+    height: 80px;
+    display: block;
+}
+
+.code {
+    font-family: 'Courier New', monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+    letter-spacing: 0.15em;
+    padding: 0.75rem 1.5rem;
+    background-color: #f8fafc;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    position: relative;
+}
+
+.code::before {
+    content: 'CÓDIGO';
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    color: #64748b;
+    letter-spacing: 0.1em;
+}
+
+.print-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: #22c55e;
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 0.75rem;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    max-width: 280px;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.print-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: #000;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.print-button:hover {
+    transform: translateY(-2px);
+}
+
+.print-button:hover::before {
+    opacity: 0.1;
+}
+
+.print-button:active {
+    transform: translateY(0);
+}
+
+.print-button i {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .voucher-container, .voucher-container * {
+        visibility: visible;
+    }
+
+    .voucher-page {
+        padding: 0;
+        background-color: white;
+    }
+
+    .info,
+    .back-button,
+    .print-button {
+        display: none;
+    }
+    
+    .voucher-container {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .voucher-card {
+        border: none;
+    }
+
+    .voucher-card::before {
+        border: 2px dashed #000;
+    }
+
+    .qr-code,
+    .barcode {
+        border: 1px solid #000;
+    }
+
+    .code {
+        border: 1px solid #000;
+    }
+}
+
+@media (max-width: 640px) {
+    .voucher-page {
+        padding: 1rem;
+    }
+    
+    .voucher-container {
+        padding: 1.5rem;
+    }
+    
+    .voucher-card {
+        padding: 1.5rem;
+    }
+
+    .qr-code img {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .barcode img {
+        width: 220px;
+        height: 70px;
+    }
+
+    .code {
+        font-size: 1.125rem;
+        padding: 0.625rem 1.25rem;
+    }
+
+    .print-button {
+        padding: 0.75rem 1.5rem;
+    }
+}

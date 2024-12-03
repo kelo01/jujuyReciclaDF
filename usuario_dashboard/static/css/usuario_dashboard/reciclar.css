@@ -1,0 +1,375 @@
+/* Estilos para la página de reciclaje */
+.reciclar-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Sección del escáner */
+.scanner-section {
+    text-align: center;
+}
+
+.scanner-section h1 {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.scanner-container {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.scanner-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 300px;
+    margin: 0 auto 2rem;
+    background: #f8fafc;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+}
+
+.scanner-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 0 8px var(--primary);
+}
+
+.scanning .scanner-line {
+    opacity: 1;
+    animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+    0% {
+        top: 0;
+    }
+    50% {
+        top: 100%;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+.scanner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid var(--primary);
+    border-radius: 0.75rem;
+}
+
+.scanner-corners::before,
+.scanner-corners::after,
+.scanner-corners::before,
+.scanner-corners::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary);
+}
+
+.scanner-corners::before {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.scanner-corners::after {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+}
+
+.qr-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+
+.scanning .qr-placeholder {
+    animation: fadeInOut 2s linear infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+}
+
+/* Botón de escaneo */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    height: 100%;
+}
+
+#startScan {
+    width: 100%;
+    max-width: 200px;
+    font-size: 1rem;
+}
+
+#startScan:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#startScan i {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Modal de éxito */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    animation: modalAppear 0.3s ease-out;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+@keyframes modalAppear {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.success-animation {
+    margin-bottom: 1.5rem;
+}
+
+.success-animation i {
+    width: 4rem;
+    height: 4rem;
+    color: var(--primary);
+    animation: successPop 0.3s ease-out;
+}
+
+@keyframes successPop {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.modal-content h2 {
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.recycling-details {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: var(--primary-light);
+    border-radius: 0.75rem;
+}
+
+.material-info {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.points-earned {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.points-label {
+    color: var(--text);
+}
+
+.points-value {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reciclar-container {
+        margin: 1rem auto;
+    }
+    
+    .scanner-frame {
+        max-width: 250px;
+    }
+}
+
+/* Animación del loader */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#startScan:disabled i[data-lucide="loader"] {
+    animation: spin 1s linear infinite;
+}
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    animation: modalAppear 0.3s ease-out;
+}
+
+.success-icon {
+    margin-bottom: 1rem;
+}
+
+.success-icon i {
+    width: 3rem;
+    height: 3rem;
+    color: var(--primary);
+}
+
+.modal h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+}
+
+.recycling-details {
+    background: var(--primary-light);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.points-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.points {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.btn-success {
+    background: var(--primary);
+    color: white;
+    width: 100%;
+}
+
+@keyframes modalAppear {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
